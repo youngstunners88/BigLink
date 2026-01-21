@@ -1,667 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Big Link Consulting | Structured Business Development</title>
 
-```json
-{
-  "name": "big-link-consulting",
-  "private": true,
-  "version": "0.1.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "@types/node": "^20.10.0",
-    "@types/react": "^18.2.43",
-    "@types/react-dom": "^18.2.17",
-    "@vitejs/plugin-react": "^4.2.1",
-    "typescript": "^5.3.3",
-    "vite": "^5.0.8"
-  }
-}
-```
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
----
+  <style>
+    :root {
+      --navy: #0b1c2d;
+      --charcoal: #1f2933;
+      --light: #f9fafb;
+      --accent: #0f3d68;
+      --border: #e5e7eb;
+    }
 
-## File: `index.html` (root)
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-```html
-
-
-
-  
-  
-  Big Link Consulting | Structured Business Development
-  
-  
-  
-  
-  
-    body {
-      font-family: 'Inter', sans-serif;
+    html {
       scroll-behavior: smooth;
     }
-  
 
-
-  
-  
-  
-
-
-```
-
----
-
-## File: `vite.config.ts` (root)
-
-```typescript
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import path from 'path';
-
-export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-  server: {
-    port: 3000,
-    host: '0.0.0.0',
-  },
-});
-```
-
----
-
-## File: `tsconfig.json` (root)
-
-```json
-{
-  "compilerOptions": {
-    "target": "ES2022",
-    "useDefineForClassFields": true,
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "paths": {
-      "@/*": ["./src/*"]
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--light);
+      color: var(--charcoal);
+      line-height: 1.65;
     }
-  },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
-}
-```
 
----
-
-## File: `tsconfig.node.json` (root)
-
-```json
-{
-  "compilerOptions": {
-    "composite": true,
-    "skipLibCheck": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true
-  },
-  "include": ["vite.config.ts"]
-}
-```
-
----
-
-## File: `.gitignore` (root)
-
-```
-node_modules/
-dist/
-build/
-.env
-.env.local
-.env.*.local
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-```
-
----
-
-## File: `README.md` (root)
-
-```markdown
-# Big Link Consulting Website
-
-This project is built with React, TypeScript, and Vite.
-
-## Setup
-
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-2. Run development server:
-   ```bash
-   npm run dev
-   ```
-
-3. Build for production:
-   ```bash
-   npm run build
-   ```
-
-4. Preview production build:
-   ```bash
-   npm run preview
-   ```
-
-## Project Structure
-
-```
-big-link-consulting/
-├── src/
-│   ├── components/
-│   │   ├── Header.tsx
-│   │   ├── Hero.tsx
-│   │   ├── Features.tsx
-│   │   ├── Services.tsx
-│   │   ├── Packages.tsx
-│   │   ├── Founder.tsx
-│   │   ├── Contact.tsx
-│   │   ├── Footer.tsx
-│   │   └── ElevenLabsWidget.tsx
-│   ├── App.tsx
-│   ├── main.tsx
-│   └── types.ts
-├── index.html
-├── package.json
-├── tsconfig.json
-└── vite.config.ts
-```
-```
-
----
-
-## File: `src/main.tsx`
-
-```typescript
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App';
-
-const root = document.getElementById('root');
-if (root) {
-  createRoot(root).render(
-    
-      
-    
-  );
-}
-```
-
----
-
-## File: `src/App.tsx`
-
-```typescript
-import React, { useState, useEffect } from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import Features from './components/Features';
-import Services from './components/Services';
-import Packages from './components/Packages';
-import Founder from './components/Founder';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
-import ElevenLabsWidget from './components/ElevenLabsWidget';
-
-const App: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
-    
-      
-      
-      
-        
-        
-        
-        
-        
-        
-      
-
-      
-      
-    
-  );
-};
-
-export default App;
-```
-
----
-
-## File: `src/types.ts`
-
-```typescript
-import React from 'react';
-
-export interface ServiceCardProps {
-  level: number;
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-}
-
-export interface PackageCardProps {
-  name: string;
-  price: string;
-  features: string[];
-  isFeatured?: boolean;
-}
-
-export interface NavItem {
-  label: string;
-  href: string;
-}
-```
-
----
-
-## File: `src/components/Header.tsx`
-
-```typescript
-import React, { useState } from 'react';
-
-interface HeaderProps {
-  isScrolled: boolean;
-}
-
-const Header: React.FC = ({ isScrolled }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const navItems = [
-    { label: 'What We Do', href: '#what' },
-    { label: 'How It Works', href: '#how' },
-    { label: 'Packages', href: '#packages' },
-    { label: 'Leadership', href: '#founder' },
-    { label: 'Contact', href: '#contact' },
-  ];
-
-  return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-5'
-      }`}
-    >
-      
-        
-          
-            
-              
-              
-              
-              
-            
-            
-              Big Link
-              Consulting
-            
-          
-        
-
-        
-          {navItems.map((item) => (
-            
-              {item.label}
-            
-          ))}
-          
-            Get Started
-          
-        
-
-        <button 
-          className="md:hidden text-slate-900 focus:outline-none"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          {isMenuOpen ? (
-            
-          ) : (
-            
-          )}
-        
-      
-
-      
-        
-          {navItems.map((item) => (
-            <a 
-              key={item.label} 
-              href={item.href} 
-              className="text-lg font-medium text-slate-800"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {item.label}
-            
-          ))}
-          <a 
-            href="#contact" 
-            className="bg-slate-900 text-white px-5 py-3 rounded-xl text-center font-bold"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Book a Strategy Call
-          
-        
-      
-    
-  );
-};
-
-export default Header;
-```
-
----
-
-## File: `src/components/Hero.tsx`
-
-```typescript
-import React from 'react';
-
-const Hero: React.FC = () => {
-  return (
-    
-      
-      
-
-      
-        
-          
-            
-              
-              
-            
-            Accelerate Your Growth
-          
-          
-          
-            Structured Business Development. Predictable Pipeline.
-          
-          
-          
-            Big Link Consulting operates as your outsourced commercial function. 
-            We secure qualified meetings, build disciplined systems, and convert opportunities into measurable growth.
-          
-          
-          
-            
-              Book a Strategy Call
-              
-            
-            <button 
-              onClick={() => {
-                 const el = document.querySelector('elevenlabs-convai') as any;
-                 if (el) el.click();
-              }}
-              className="w-full sm:w-auto px-8 py-4 bg-white text-slate-900 border-2 border-slate-200 rounded-xl text-lg font-bold hover:border-slate-400 transition-all flex items-center justify-center gap-2"
-            >
-              Ask Our AI Advisor
-              
-            
-          
-
-          
-            
-              
-              No-Hassle Lead Generation
-            
-            
-              
-              Transparent Reporting
-            
-            
-              
-              Relationship-Led Approach
-            
-          
-        
-      
-    
-  );
-};
-
-export default Hero;
-```
-
----
-
-## File: `src/components/Features.tsx`
-
-```typescript
-import React from 'react';
-
-const Features: React.FC = () => {
-  return (
-    
-      
-        
-          
-            
-              Why High-Growth Pipelines Break.
-            
-            
-              Most capable businesses don't struggle because of poor delivery. They struggle because growth is unmanaged and erratic.
-            
-            
-            
-              {[
-                "Over-reliance on random referrals",
-                "Inconsistent outreach & follow-ups",
-                "High internal sales management costs",
-                "Inability to reach key decision makers",
-                "Lack of a repeatable growth system"
-              ].map((text, i) => (
-                
-                  
-                    
-                  
-                  {text}
-                
-              ))}
-            
-          
-          
-            
-            
-              Our Difference
-              
-                We don't run "campaigns." We build and operate high-fidelity systems that turn outreach into appointments and appointments into revenue.
-              
-              
-              
-                
-                  Outcome Oriented
-                  
-                    We focus on the metrics that matter: SQLs (Sales Qualified Leads) and ROI, not vanity open rates.
-                  
-                
-                
-                  Relationship First
-                  
-                    Personalized outreach that respects your brand and values the long-term relationship over the quick win.
-                  
-                
-              
-            
-          
-        
-      
-    
-  );
-};
-
-export default Features;
-```
-
----
-
-## File: `src/components/Services.tsx`
-
-```typescript
-import React from 'react';
-
-const Services: React.FC = () => {
-  const steps = [
-    {
-      level: 1,
-      title: "Build & Run",
-      description: "Full-cycle business development including targeting, high-touch outreach, meeting booking, and pipeline management.",
-      icon: (
-        
-      )
-    },
-    {
-      level: 2,
-      title: "Strategic Network",
-      description: "Warm introductions to strategic partners and decision-makers within our exclusive global business ecosystem.",
-      icon: (
-        
-      )
-    },
-    {
-      level: 3,
-      title: "Capital & Scale",
-      description: "Access to corporate programmes, investor networks, and high-level strategic deal-making support.",
-      icon: (
-        
-      )
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
     }
-  ];
 
-  return (
-    
-      
-        
-          Our Structured Framework
-          
-            We don't do ad-hoc. We follow a proven framework designed to scale with your business's complexity and ambitions.
-          
-        
-        
-          
-          
-          {steps.map((step) => (
-            
-              
-                {step.icon}
-              
-              Level {step.level}
-              {step.title}
-              {step.description}
-            
-          ))}
-        
-      
-    
-  );
-};
-
-export default Services;
-```
-
----
-
-## File: `src/components/Packages.tsx`
-
-```typescript
-import React from 'react';
-
-const Packages: React.FC = () => {
-  const packages = [
-    {
-      name: "Focus",
-      price: "R25,000",
-      description: "Perfect for specialized boutiques needing focused outreach.",
-      features: ["Targeted Account List", "Personalized LinkedIn Outreach", "Monthly Strategy Review", "Pipeline Tracking"]
-    },
-    {
-      name: "Ambition",
-      price: "R37,000",
-      description: "For growing teams ready to scale their presence.",
-      features: ["Multi-Channel Outreach", "CRM Integration", "Fortnightly Review Calls", "Executive Reporting", "Lead Qualification"],
-      isFeatured: true
-    },
-    {
-      name: "Growth",
-      price: "R50,000",
-      description: "Aggressive market penetration and system building.",
-      features: ["Dedicated Lead Manager", "Advanced Market Mapping", "Weekly Pipeline Sprints", "Content Assistance", "Partner Introductions"]
-    },
-    {
-      name: "Leader",
-      price: "R70,000+",
-      description: "Custom enterprise strategy for market leaders.",
-      features: ["Bespoke Commercial Strategy", "Global Market Access", "Deal Advisory", "Full Outsourced SDR Function", "Board-Level Reporting"]
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
     }
-  ];
 
-  return (
-    <section id="packages" className="py-24 bg-white">
-      <div className="container mx-auto px-6">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <h2 className="text-4xl font-extrabold text-slate-900 mb-6">Tailored Performance Packages</h2>
-          <p className="text-xl text-slate-600">
-            Investment options designed to match your growth phase and required volume.
-          </p>
-        </div>
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--navy);
+    }
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {packages.map((pkg) => (
-            <div 
-              key={pkg.name} 
-              className={`relative p-8 rounded-3xl transition-all ${
-                pkg.isFeatured 
-                ? 'bg-slate-900 text-white shadow-2xl scale-105 z-10' 
-                : 'bg-gray-50 text-slate-900 border border-gray-100 hover:border-slate-300'
-              }`}
-            >
-              {pkg.isFeatured && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 bg-blue-500 text-white text-[10px] font-bold uppercase rounded-full tracking-widest">
-                  Most Popular
-                </div>
-              )}
-              <h3 className={`text-xl font-bold mb-2 ${pkg.isFeatured ? 'text-blue-400' : 'text-blue-900'}`}>{pkg.name}</h3>
-              <div className="flex items-baseline gap-1 mb-4">
-                <span className="text-4xl font-extrabold">{pkg.price}</span>
-                <span className={
+    .brand span {
+      font-size: 12px;
+      font-weight: 400;
+      opacity: 0.7;
+      letter-spacing: 0.2em;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--charcoal);
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 110px 24px;
+    }
+
+    h1, h2, h3 {
+      color: var(--navy);
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 3.4rem;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: 2.4rem;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+    }
+
+    p {
+      max-width: 760px;
+      font-size: 1.05rem;
+      margin-bottom: 20px;
+      color: #374151;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 80px;
+      align-items: center;
+      padding-top: 140px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #eef4fb;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      padding: 8px 14px;
+      border-radius: 999px;
+      margin-bottom: 24px;
+    }
+
+    .hero-buttons a {
+      display: inline-block;
+      margin-right: 16px;
+      margin-top: 20px;
+      padding: 16px 32px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .primary {
+      background: var(--navy);
+      color: white;
+    }
+
+    .primary:hover {
+      background: #091726;
+    }
+
+    .secondary {
+      border: 2px solid var(--navy);
+      color: var(--navy);
+    }
+
+    .secondary:hover {
+      background: var(--navy);
+      color: white;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 48px;
+    }
+
+    .card {
+      background: white;
+      padding: 42px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .card ul {
+      margin-top: 12px;
+      padding-left: 18px;
+    }
+
+    .card li {
+      margin-bottom: 10px;
+    }
+
+    footer {
+      background: var(--navy);
+      color: white;
+      padding: 80px 24px;
+    }
+
+    footer p {
+      color: #d1d5db;
+      max-width: none;
+      font-size: 0.9rem;
+    }
+
+    elevenlabs-convai {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 120px;
+      }
+
+      h1 {
+        font-size: 2.6rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      BIG LINK
+      <span>CONSULTING</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#what">What We Do</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#packages">Packages</a></li>
+        <li><a href="#founder">Leadership</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="badge">Structured Growth Systems</div>
+    <h1>Structured Business Development.<br>Predictable Pipeline.</h1>
+    <p>
+      Big Link Consulting operates as your outsourced commercial function.
+      We design and run disciplined business development systems that convert
+      outreach into qualified meetings and long-term revenue.
+    </p>
+    <div class="hero-buttons">
+      <a href="#contact" class="primary">Book a Strategy Call</a>
+      <a href="javascript:void(0)" class="secondary" onclick="document.querySelector('elevenlabs-convai').click()">Ask Our Advisor</a>
+    </div>
+  </div>
+  <div>
+    <p><strong>Our difference:</strong> We don’t run campaigns. We build systems that scale relationships and outcomes.</p>
+  </div>
+</section>
+
+<section id="what">
+  <h2>What We Do</h2>
+  <p>
+    Big Link Consulting is not lead generation and not ad-hoc outreach.
+    We build and operate structured business development engines that
+    produce consistent, measurable deal flow.
+  </p>
+</section>
+
+<section>
+  <h2>Why Pipelines Break</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Common Challenges</h3>
+      <ul>
+        <li>Over-reliance on referrals</li>
+        <li>Inconsistent outreach</li>
+        <li>Unclear decision makers</li>
+        <li>High internal sales costs</li>
+        <li>Poor follow-through</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>The Reality</h3>
+      <p>
+        Most capable businesses don’t struggle because of delivery.
+        They struggle because growth is unmanaged, inconsistent, and reactive.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <h2>Our Structured Framework</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Level 1 — Build & Run</h3>
+      <p>Targeting, high-touch outreach, meeting booking, and pipeline management.</p>
+    </div>
+    <div class="card">
+      <h3>Level 2 — Strategic Network</h3>
+      <p>Warm introductions to decision-makers and ecosystem partners.</p>
+    </div>
+    <div class="card">
+      <h3>Level 3 — Capital & Deals</h3>
+      <p>Investor access, corporate programmes, and strategic deal support.</p>
+    </div>
+  </div>
+</section>
+
+<section id="packages">
+  <h2>Packages</h2>
+  <div class="grid-2">
+    <div class="card"><h3>Focus</h3><p>From R25,000 / month</p></div>
+    <div class="card"><h3>Ambition</h3><p>From R37,000 / month</p></div>
+    <div class="card"><h3>Growth</h3><p>From R50,000 / month</p></div>
+    <div class="card"><h3>Market Leader</h3><p>From R70,000+ / month</p></div>
+  </div>
+</section>
+
+<section id="founder">
+  <h2>Leadership</h2>
+  <p>
+    Big Link Consulting is led by Byron Pinheiro, a relationship-led commercial strategist
+    focused on turning business development into a disciplined, repeatable system.
+  </p>
+</section>
+
+<section id="contact">
+  <h2>Next Steps</h2>
+  <p>
+    Book a no-obligation strategy call to review your pipeline,
+    clarify your ideal buyers, and determine fit.
+  </p>
+  <p>
+    <strong>Email:</strong> byron@biglinkconsulting.co.za<br>
+    <strong>Phone:</strong> +27 82 969 4172
+  </p>
+</section>
+
+<footer>
+  <p>© 2026 Big Link Consulting. Structured Business Development.</p>
+</footer>
+
+<elevenlabs-convai agent-id="agent_3801kfc86ffgfm5sjzsdwtvmvrta"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async></script>
+
+</body>
+</html>
