@@ -7,7 +7,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -15,7 +15,10 @@
       --charcoal: #1f2933;
       --light: #f9fafb;
       --accent: #0f3d68;
+      --accent-light: #1a5a96;
       --border: #e5e7eb;
+      --gradient-1: linear-gradient(135deg, #0b1c2d 0%, #1a3a52 100%);
+      --gradient-2: linear-gradient(135deg, #0f3d68 0%, #1a5a96 100%);
     }
 
     * {
@@ -33,15 +36,63 @@
       background: var(--light);
       color: var(--charcoal);
       line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* Scroll Progress Bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--gradient-2);
+      z-index: 10000;
+      transition: width 0.1s ease;
+      box-shadow: 0 0 10px rgba(15, 61, 104, 0.5);
+    }
+
+    /* Animated Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.03;
+      pointer-events: none;
+    }
+
+    .bg-animation span {
+      position: absolute;
+      display: block;
+      width: 2px;
+      height: 2px;
+      background: var(--navy);
+      border-radius: 50%;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      25% { transform: translateY(-100px) translateX(50px); }
+      50% { transform: translateY(-200px) translateX(-50px); }
+      75% { transform: translateY(-100px) translateX(100px); }
     }
 
     header {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.02);
+      transition: all 0.3s ease;
+    }
+
+    header.scrolled {
+      box-shadow: 0 4px 30px rgba(0,0,0,0.08);
     }
 
     .nav {
@@ -56,37 +107,115 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       color: var(--navy);
+      transition: transform 0.3s ease;
     }
 
-    .brand span {
-      font-size: 12px;
-      font-weight: 400;
-      opacity: 0.7;
-      letter-spacing: 0.2em;
+    .brand:hover {
+      transform: translateY(-2px);
+    }
+
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+      transition: filter 0.3s ease;
+    }
+
+    .brand:hover .brand-logo {
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .brand-text .main {
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .brand-text .sub {
+      font-size: 10px;
+      font-weight: 500;
+      opacity: 0.65;
+      letter-spacing: 0.25em;
     }
 
     nav ul {
       display: flex;
-      gap: 28px;
+      gap: 32px;
       list-style: none;
     }
 
     nav a {
+      position: relative;
       text-decoration: none;
       font-size: 13px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.12em;
       color: var(--charcoal);
+      transition: color 0.3s ease;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-2);
+      transition: width 0.3s ease;
     }
 
     nav a:hover {
       color: var(--accent);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* Fade-in animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .fade-in-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
     }
 
     section {
@@ -101,110 +230,336 @@
     }
 
     h1 {
-      font-size: 3.4rem;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
+      font-size: 3.6rem;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      font-weight: 900;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     h2 {
-      font-size: 2.4rem;
-      letter-spacing: -0.01em;
+      font-size: 2.6rem;
+      letter-spacing: -0.015em;
+      font-weight: 800;
+      position: relative;
+      display: inline-block;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--gradient-2);
+      border-radius: 2px;
     }
 
     h3 {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
+      font-weight: 700;
     }
 
     p {
       max-width: 760px;
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       margin-bottom: 20px;
       color: #374151;
+      line-height: 1.75;
     }
 
     .hero {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
+      grid-template-columns: 1.3fr 1fr;
       gap: 80px;
       align-items: center;
-      padding-top: 140px;
+      padding-top: 160px;
+      padding-bottom: 140px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(15, 61, 104, 0.05) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
     }
 
     .badge {
       display: inline-block;
-      background: #eef4fb;
+      background: linear-gradient(135deg, #eef4fb 0%, #e0ebf5 100%);
       color: var(--accent);
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
-      padding: 8px 14px;
+      letter-spacing: 0.2em;
+      padding: 10px 18px;
       border-radius: 999px;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 12px rgba(15, 61, 104, 0.1);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+
+    .hero-buttons {
+      margin-top: 36px;
     }
 
     .hero-buttons a {
       display: inline-block;
       margin-right: 16px;
-      margin-top: 20px;
-      padding: 16px 32px;
-      border-radius: 10px;
+      margin-bottom: 16px;
+      padding: 18px 36px;
+      border-radius: 12px;
       text-decoration: none;
       font-weight: 700;
       font-size: 15px;
+      letter-spacing: 0.02em;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
     }
 
     .primary {
-      background: var(--navy);
+      background: var(--gradient-1);
       color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .primary:hover::before {
+      left: 100%;
     }
 
     .primary:hover {
-      background: #091726;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(11, 28, 45, 0.25);
     }
 
     .secondary {
       border: 2px solid var(--navy);
       color: var(--navy);
+      background: white;
     }
 
     .secondary:hover {
       background: var(--navy);
       color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(11, 28, 45, 0.2);
+    }
+
+    .hero-side {
+      background: linear-gradient(135deg, rgba(15, 61, 104, 0.03) 0%, rgba(26, 90, 150, 0.03) 100%);
+      padding: 48px;
+      border-radius: 24px;
+      border: 1px solid rgba(15, 61, 104, 0.1);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hero-side:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08);
     }
 
     .grid-2 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 48px;
+      gap: 32px;
     }
 
     .card {
       background: white;
-      padding: 42px;
+      padding: 44px;
       border-radius: 20px;
       border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 0;
+      background: var(--gradient-2);
+      transition: height 0.4s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+      border-color: rgba(15, 61, 104, 0.2);
+    }
+
+    .card:hover::before {
+      height: 100%;
+    }
+
+    .card h3 {
+      color: var(--navy);
+      margin-bottom: 16px;
+      font-size: 1.4rem;
     }
 
     .card ul {
-      margin-top: 12px;
-      padding-left: 18px;
+      margin-top: 16px;
+      padding-left: 20px;
     }
 
     .card li {
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      color: #4b5563;
+      font-size: 0.98rem;
+      transition: color 0.3s ease;
+    }
+
+    .card:hover li {
+      color: var(--charcoal);
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 60px 40px;
+    }
+
+    .stat-number {
+      font-size: 3.5rem;
+      font-weight: 900;
+      background: var(--gradient-2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 12px;
     }
 
     footer {
-      background: var(--navy);
+      background: var(--gradient-1);
       color: white;
-      padding: 80px 24px;
+      padding: 80px 24px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .footer-logo {
+      height: 50px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .footer-brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .footer-brand-text .main {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+    }
+
+    .footer-brand-text .sub {
+      font-size: 11px;
+      font-weight: 500;
+      opacity: 0.8;
+      letter-spacing: 0.25em;
     }
 
     footer p {
-      color: #d1d5db;
+      color: rgba(255,255,255,0.8);
       max-width: none;
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    footer h4 {
       font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 16px;
+      opacity: 0.9;
+      font-weight: 700;
+    }
+
+    footer a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: block;
+      margin-bottom: 10px;
+      transition: all 0.3s ease;
+    }
+
+    footer a:hover {
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: auto;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      opacity: 0.7;
+      font-size: 0.85rem;
     }
 
     elevenlabs-convai {
@@ -212,29 +567,92 @@
       bottom: 24px;
       right: 24px;
       z-index: 9999;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,0.15));
     }
 
+    /* Mobile Responsive */
     @media (max-width: 900px) {
       .hero {
         grid-template-columns: 1fr;
-        padding-top: 120px;
+        padding-top: 100px;
+        padding-bottom: 80px;
       }
 
       h1 {
-        font-size: 2.6rem;
+        font-size: 2.4rem;
       }
+
+      h2 {
+        font-size: 2rem;
+      }
+
+      .nav {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      section {
+        padding: 80px 24px;
+      }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--light);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--gradient-2);
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--navy);
     }
   </style>
 </head>
 
 <body>
 
-<header>
+<!-- Scroll Progress Bar -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Animated Background -->
+<div class="bg-animation">
+  <span style="top: 10%; left: 20%; animation-delay: 0s;"></span>
+  <span style="top: 30%; left: 60%; animation-delay: 2s;"></span>
+  <span style="top: 50%; left: 10%; animation-delay: 4s;"></span>
+  <span style="top: 70%; left: 80%; animation-delay: 6s;"></span>
+  <span style="top: 20%; left: 70%; animation-delay: 1s;"></span>
+  <span style="top: 60%; left: 40%; animation-delay: 3s;"></span>
+  <span style="top: 80%; left: 15%; animation-delay: 5s;"></span>
+  <span style="top: 40%; left: 85%; animation-delay: 7s;"></span>
+</div>
+
+<header id="header">
   <div class="nav">
-    <div class="brand">
-      BIG LINK
-      <span>CONSULTING</span>
-    </div>
+    <a href="#" class="brand">
+      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTAwIDQwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgeyBmaWxsOiAjMGIxYzJkOyB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cmVjdCBjbGFzcz0iY2xzLTEiIHg9IjEwIiB5PSI1IiB3aWR0aD0iMTUiIGhlaWdodD0iMTUiIHJ4PSIyIiB0cmFuc2Zvcm09InJvdGF0ZSg0NSAxNy41IDE3LjUpIi8+CiAgPHJlY3QgY2xhc3M9ImNscy0xIiB4PSIyNSIgeT0iMjAiIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSIgcng9IjIiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDMyLjUgMjcuNSkiLz4KPC9zdmc+" alt="Big Link Logo" class="brand-logo">
+      <div class="brand-text">
+        <span class="main">BIG LINK</span>
+        <span class="sub">CONSULTING</span>
+      </div>
+    </a>
     <nav>
       <ul>
         <li><a href="#what">What We Do</a></li>
@@ -248,7 +666,7 @@
 </header>
 
 <section class="hero">
-  <div>
+  <div class="fade-in-left">
     <div class="badge">Structured Growth Systems</div>
     <h1>Structured Business Development.<br>Predictable Pipeline.</h1>
     <p>
@@ -261,12 +679,14 @@
       <a href="javascript:void(0)" class="secondary" onclick="document.querySelector('elevenlabs-convai').click()">Ask Our Advisor</a>
     </div>
   </div>
-  <div>
-    <p><strong>Our difference:</strong> We don’t run campaigns. We build systems that scale relationships and outcomes.</p>
+  <div class="fade-in-right">
+    <div class="hero-side">
+      <p><strong>Our difference:</strong> We don't run campaigns. We build systems that scale relationships and outcomes.</p>
+    </div>
   </div>
 </section>
 
-<section id="what">
+<section id="what" class="fade-in">
   <h2>What We Do</h2>
   <p>
     Big Link Consulting is not lead generation and not ad-hoc outreach.
@@ -275,7 +695,7 @@
   </p>
 </section>
 
-<section>
+<section class="fade-in">
   <h2>Why Pipelines Break</h2>
   <div class="grid-2">
     <div class="card">
@@ -291,14 +711,14 @@
     <div class="card">
       <h3>The Reality</h3>
       <p>
-        Most capable businesses don’t struggle because of delivery.
+        Most capable businesses don't struggle because of delivery.
         They struggle because growth is unmanaged, inconsistent, and reactive.
       </p>
     </div>
   </div>
 </section>
 
-<section id="how">
+<section id="how" class="fade-in">
   <h2>Our Structured Framework</h2>
   <div class="grid-2">
     <div class="card">
@@ -316,17 +736,33 @@
   </div>
 </section>
 
-<section id="packages">
+<section id="packages" class="fade-in">
   <h2>Packages</h2>
   <div class="grid-2">
-    <div class="card"><h3>Focus</h3><p>From R25,000 / month</p></div>
-    <div class="card"><h3>Ambition</h3><p>From R37,000 / month</p></div>
-    <div class="card"><h3>Growth</h3><p>From R50,000 / month</p></div>
-    <div class="card"><h3>Market Leader</h3><p>From R70,000+ / month</p></div>
+    <div class="card stat-card">
+      <h3>Focus</h3>
+      <div class="stat-number">R25k</div>
+      <p style="margin: 0;">per month</p>
+    </div>
+    <div class="card stat-card">
+      <h3>Ambition</h3>
+      <div class="stat-number">R37k</div>
+      <p style="margin: 0;">per month</p>
+    </div>
+    <div class="card stat-card">
+      <h3>Growth</h3>
+      <div class="stat-number">R50k</div>
+      <p style="margin: 0;">per month</p>
+    </div>
+    <div class="card stat-card">
+      <h3>Market Leader</h3>
+      <div class="stat-number">R70k+</div>
+      <p style="margin: 0;">per month</p>
+    </div>
   </div>
 </section>
 
-<section id="founder">
+<section id="founder" class="fade-in">
   <h2>Leadership</h2>
   <p>
     Big Link Consulting is led by Byron Pinheiro, a relationship-led commercial strategist
@@ -334,24 +770,97 @@
   </p>
 </section>
 
-<section id="contact">
+<section id="contact" class="fade-in">
   <h2>Next Steps</h2>
   <p>
     Book a no-obligation strategy call to review your pipeline,
     clarify your ideal buyers, and determine fit.
   </p>
   <p>
-    <strong>Email:</strong> byron@biglinkconsulting.co.za<br>
-    <strong>Phone:</strong> +27 82 969 4172
+    <strong>Email:</strong> <a href="mailto:byron@biglinkconsulting.co.za" style="color: var(--accent); text-decoration: none;">byron@biglinkconsulting.co.za</a><br>
+    <strong>Phone:</strong> <a href="tel:+27829694172" style="color: var(--accent); text-decoration: none;">+27 82 969 4172</a>
   </p>
 </section>
 
 <footer>
-  <p>© 2026 Big Link Consulting. Structured Business Development.</p>
+  <div class="footer-content fade-in">
+    <div>
+      <div class="footer-brand">
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTAwIDQwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgeyBmaWxsOiAjZmZmZmZmOyB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cmVjdCBjbGFzcz0iY2xzLTEiIHg9IjEwIiB5PSI1IiB3aWR0aD0iMTUiIGhlaWdodD0iMTUiIHJ4PSIyIiB0cmFuc2Zvcm09InJvdGF0ZSg0NSAxNy41IDE3LjUpIi8+CiAgPHJlY3QgY2xhc3M9ImNscy0xIiB4PSIyNSIgeT0iMjAiIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSIgcng9IjIiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDMyLjUgMjcuNSkiLz4KPC9zdmc+" alt="Big Link Logo" class="footer-logo">
+        <div class="footer-brand-text">
+          <span class="main">BIG LINK</span>
+          <span class="sub">CONSULTING</span>
+        </div>
+      </div>
+      <p>Structured business development systems that convert outreach into qualified meetings and long-term revenue.</p>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <a href="#what">What We Do</a>
+      <a href="#how">How It Works</a>
+      <a href="#packages">Packages</a>
+      <a href="#founder">Leadership</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:byron@biglinkconsulting.co.za">byron@biglinkconsulting.co.za</a>
+      <a href="tel:+27829694172">+27 82 969 4172</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Big Link Consulting. Structured Business Development.</p>
+  </div>
 </footer>
 
 <elevenlabs-convai agent-id="agent_3801kfc86ffgfm5sjzsdwtvmvrta"></elevenlabs-convai>
 <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async></script>
+
+<script>
+  // Scroll Progress Bar
+  window.addEventListener('scroll', () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById('scrollProgress').style.width = scrolled + '%';
+  });
+
+  // Header scroll effect
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // Intersection Observer for fade-in animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+
+  // Observe all fade-in elements
+  document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Add staggered animation to cards
+  document.querySelectorAll('.grid-2').forEach(grid => {
+    const cards = grid.querySelectorAll('.card');
+    cards.forEach((card, index) => {
+      card.style.transitionDelay = `${index * 0.1}s`;
+    });
+  });
+</script>
 
 </body>
 </html>
